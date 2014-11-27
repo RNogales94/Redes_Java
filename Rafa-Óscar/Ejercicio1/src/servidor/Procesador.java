@@ -17,14 +17,14 @@ import java.util.Random;
 //
 public class Procesador {
 	// Referencia a un socket para enviar/recibir las peticiones/respuestas
-	private Socket socketServicio;
+	private final Socket socketServicio;
 	// stream de lectura (por aquí se recibe lo que envía el cliente)
 	private InputStream inputStream;
 	// stream de escritura (por aquí se envía los datos al cliente)
 	private OutputStream outputStream;
 	
 	// Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
-	private Random random;
+	private final Random random;
 	
 	// Constructor que tiene como parámetro una referencia al socket abierto en por otra clase
 	public Procesador(Socket socketServicio) {
@@ -83,15 +83,14 @@ public class Procesador {
 		// Desordenamos las palabras:
 		String[] s = peticion.split(" ");
 		String resultado="";
-		
-		for(int i=0;i<s.length;i++){
-			int j=random.nextInt(s.length);
-			int k=random.nextInt(s.length);
-			String tmp=s[j];
-			
-			s[j]=s[k];
-			s[k]=tmp;
-		}
+            for (String item : s) {
+                int j=random.nextInt(s.length);
+                int k=random.nextInt(s.length);
+                String tmp=s[j];
+                
+                s[j]=s[k];
+                s[k]=tmp;
+            }
 		
 		resultado=s[0];
 		for(int i=1;i<s.length;i++){
